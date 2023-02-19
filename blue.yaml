@@ -1,0 +1,95 @@
+ueprint:
+  name: Panel_test
+  description: "Konfiguracja panelu"
+
+  source_url: https://github.com/KatarzynaBanczyk/Panel_test/blob/main/blue.yaml
+  domain: automation
+  homeassistant:
+    min_version: 2022.11.1
+  input:
+    ##### MAIN NAME #####
+    nspanel_name:
+      name: ESPhome Node Name
+      description: '* *here you have to enter exactly the same **"device_name"** you entered in the Esphome file*'
+      default: [test]
+      selector:
+        text: {}
+
+    language:
+      name: Language for NSPanel
+      default: "EN"
+      selector:
+        select:
+          mode: dropdown
+          options:
+            - label: "English"
+              value: ENG
+            - label: "German"
+              value: DEU
+            - label: "Bulgarian"
+              value: BGR
+            - label: "Czech"
+              value: CZE
+            - label: "Danish"
+              value: DNK
+            - label: "Dutch"
+              value: NLD
+            - label: "Estonian"
+              value: EST
+            - label: "Finnish"
+
+    tft_path:
+      name: Nextion TFT File Folder (Optional)
+      description: '* *TFT Path where the Nextion TFT File is stored. Attention! The **"Folder-Watcher"** must also be configured in the configuration.yaml. **Only necessary for manual upload of TFT file in ESPHome Advaced mode.** See HowTo*'
+      default: []
+      selector:
+        text: {}
+    delay:
+      name: Delay to avoid synchronization problem
+      description: "* *Synchronization Problems may occur due to the **NETWORK / WLAN**. To avoid this problem enter your value for the delay (milliseconds)*"
+      default: "1"
+      selector:
+        number:
+          min: 0
+          max: 100
+    sync_value_ha:
+      name: Synchronization of all values (Optional)
+      description: "* *Synchronization of values between HA and NSPanel for Lightsetting and Coversetting Page -> Maybe causes number jumps*"
+      default: "select_no"
+      selector:
+        select:
+          options:
+            - label: "No"
+              value: select_no
+            - label: "Yes"
+              value: select_yes
+    sync_slider_ha:
+      name: Synchronization of all Sliders (Optional)
+      description: "* *Synchronization of sliders between HA and NSPanel for Lightsetting and Coversetting Page -> Maybe causes flickering on the Slider*"
+      default: "select_no"
+      selector:
+        select:
+          options:
+            - label: "No"
+              value: select_no
+            - label: "Yes"
+              value: select_yes
+
+    ##### WEATHER #####
+    weather:
+      name: Weather Integration
+      description: "* *select our Weather Integration*"
+      default: "Default"
+      selector:
+        select:
+          options:
+            - Default
+            - AccuWeather
+    weather_entity:
+      name: Weather entity from HA
+      description: "* *Select your weather entity.*"
+      default: []
+      selector:
+        entity:
+          domain:
+            - weather
