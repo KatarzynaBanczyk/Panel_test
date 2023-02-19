@@ -1,28 +1,32 @@
 blueprint:
-  name: Panel_test
-  description: "Konfiguracja panelu"
-
-  source_url: https://github.com/KatarzynaBanczyk/Panel_test/blob/main/blue.yaml
+  name: Motion Light Tutorial
+  description: Turn a light on based on detected motion
   domain: automation
-  homeassistant:
-    min_version: 2022.11.1
-
   input:
-    ##### MAIN NAME #####
-    nspanel_name:
-      name: ESPhome Node Name
-      description: '* *here you have to enter exactly the same **"device_name"** you entered in the Esphome file*'
-      default: [test]
+    motion_sensor:
+      name: Motion Sensor
+      description: This sensor will be synchronized with the light.
       selector:
-        text: {}
+        entity:
+          domain: binary_sensor
+          device_class: motion
+    target_light:
+      name: Lights
+      description: The lights to keep in sync.
+      selector:
+        target:
+          entity:
+            domain: light
 
-    language:
-      name: Language for NSPanel
-      default: "EN"
-      selector:
-        select:
-          mode: dropdown
-          options:
-            - label: "English"
-              value: ENG
-            - label: "German"
+trigger:
+  - platform: state
+    entity_id: !input motion_sensor
+
+action:
+  - service: >
+      {% if trigger.to_state.state == "on" %}
+        light.turn_on
+      {% else %}
+        light.turn_off
+      {% endif %}
+    target: !input target_light
