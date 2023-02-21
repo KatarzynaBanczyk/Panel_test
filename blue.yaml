@@ -1,32 +1,51 @@
 blueprint:
-  name: Motion Light Tutorial
-  description: Turn a light on based on detected motion
+  name: Shelly i4 4 Buttons actions
+  description: This blueprint is for the Shelly i4 setup as button. It is for general use.
   domain: automation
   input:
-    motion_sensor:
-      name: Motion Sensor
-      description: This sensor will be synchronized with the light.
+    button:
+      name: button
+      description: Choose Shelly i4
       selector:
-        entity:
-          domain: binary_sensor
-          device_class: motion
-    target_light:
-      name: Lights
-      description: The lights to keep in sync.
+        device:
+          manufacturer: Shelly
+          model: SNSN-0024X
+          multiple: false
+    downb1:
+      name: Down Button 1
+      description: Action to run when SHORT press
+      default: []
       selector:
-        target:
-          entity:
-            domain: light
-
+        action: {}
+    upb1:
+      name: up Button 1
+      description: Action to run when SHORT press
+      default: []
+      selector:
+        action: {}
+mode: restart
+max_exceeded: silent
 trigger:
-  - platform: state
-    entity_id: !input motion_sensor
+  - platform: device
+    device_id: !input button
+    domain: shelly
+    type: btn_down
+    subtype: button1
+    id: btn1_down
+  - platform: device
+    device_id: !input button
+    domain: shelly
+    type: btn_up
+    subtype: button1
+    id: btn1_up
 
 action:
-  - service: >
-      {% if trigger.to_state.state == "on" %}
-        light.turn_on
-      {% else %}
-        light.turn_off
-      {% endif %}
-    target: !input target_light
+  - choose:
+      - conditions:
+          - condition: trigger
+            id: btn1_down
+        sequence: !input downb1
+      - conditions:
+          - condition: trigger
+            id: btn1_up
+        sequence: !input upb1
