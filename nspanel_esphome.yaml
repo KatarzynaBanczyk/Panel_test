@@ -366,11 +366,12 @@ binary_sensor:
     on_press:
       then:
         - lambda: |-
-            if (id(disp1_currentpage).state == "lightsettings" or id(disp1_currentpage).state == "coversettings") {
-              ESP_LOGD("nspanel", "settingspage -> no press");
+            if (id(disp1_currentpage).state == "home") {
+            id(disp1).send_command_printf("page butttonpage01");
+            } else if(id(disp1_currentpage).state == "buttonpage01"){
+            id(disp1).send_command_printf("page home");
             } else {
-              // ESP_LOGD("nspanel", "release button");
-              id(disp1_lastclick_general).set_state("pressbuttonleft",true,true);
+            id(disp1).send_command_printf("page home");
             }
     on_release:
       then:
@@ -424,11 +425,12 @@ binary_sensor:
     on_press:
       then:
         - lambda: |-
-            if (id(disp1_currentpage).state == "lightsettings" or id(disp1_currentpage).state == "coversettings") {
-              ESP_LOGD("nspanel", "settingspage -> no press");
+            if (id(disp1_currentpage).state == "home") {
+            id(disp1).send_command_printf("page butttonpage01");
+            } else if(id(disp1_currentpage).state == "buttonpage01"){
+            id(disp1).send_command_printf("page home");
             } else {
-              // ESP_LOGD("nspanel", "release button");
-              id(disp1_lastclick_general).set_state("pressbuttonright",true,true);
+            id(disp1).send_command_printf("page home");
             }
     on_release:
       then:
