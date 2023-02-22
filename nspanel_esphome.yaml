@@ -400,28 +400,14 @@ binary_sensor:
       - min_length: 50ms
         max_length: 1000ms
         then:
-          - binary_sensor.template.publish:
-              id: right_button_short
-              state: ON
-          - if:
-              condition:
-                and:
-                  - switch.is_on: relay2_fallback
-                  - not:
-                      api.connected:
-              then:
-                - switch.toggle: relay_2
-                - lambda: id(disp1).send_command_printf("home.icon_top_02.pic=51");
-                - lambda: id(disp1).send_command_printf("home.right_bt_pic.pic=98");
-                - if:
-                    condition:
-                      switch.is_on: relay_2
-                    then:
-                      - lambda: id(disp1).send_command_printf("home.icon_top_02.pic=106");
-          - delay: 500ms
-          - binary_sensor.template.publish:
-              id: right_button_short
-              state: OFF
+          - lambda: |-
+              if (id(disp1_currentpage).state == "home") {
+              id(disp1).send_command_printf("page butttonpage01");
+              } else if(id(disp1_currentpage).state == "buttonpage01"){
+              id(disp1).send_command_printf("page home");
+              } else {
+              id(disp1).send_command_printf("page home");
+              }
     on_press:
       then:
         - lambda: |-
@@ -432,21 +418,6 @@ binary_sensor:
             } else {
             id(disp1).send_command_printf("page home");
             }
-    on_release:
-      then:
-        - lambda: |-
-            if (id(disp1_currentpage).state == "lightsettings" or id(disp1_currentpage).state == "coversettings") {
-              ESP_LOGD("nspanel", "settingspage -> no release");
-            } else {
-              // ESP_LOGD("nspanel", "release button");
-              id(disp1_lastclick_general).set_state("releasebuttonright",true,true);
-            }
-
-  - platform: template
-    name: ${device_name} Right Button
-    id: right_button_short
-    lambda: |-
-      return {};
 
   ##### Restart NSPanel Button - Setting Page #####
   - platform: nextion
