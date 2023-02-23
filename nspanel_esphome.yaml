@@ -344,21 +344,6 @@ binary_sensor:
           - binary_sensor.template.publish:
               id: left_button_short
               state: ON
-          - if:
-              condition:
-                and:
-                  - switch.is_on: relay1_fallback
-                  - not:
-                      api.connected:
-              then:
-                - switch.toggle: relay_1
-                - lambda: id(disp1).send_command_printf("home.icon_top_01.pic=51");
-                - lambda: id(disp1).send_command_printf("home.left_bt_pic.pic=98");
-                - if:
-                    condition:
-                      switch.is_on: relay_1
-                    then:
-                      - lambda: id(disp1).send_command_printf("home.icon_top_01.pic=105");
           - delay: 500ms
           - binary_sensor.template.publish:
               id: left_button_short
@@ -383,12 +368,6 @@ binary_sensor:
               id(disp1_lastclick_general).set_state("releasebuttonleft",true,true);
             }
 
-  - platform: template
-    name: ${device_name} Left Button
-    id: left_button_short
-    lambda: |-
-      return {};
-
   ##### RIGHT BUTTON BELOW DISPLAY TO TOGGLE RELAY #####
   - platform: gpio
     # name: ${device_name} Right Button
@@ -408,16 +387,6 @@ binary_sensor:
               } else {
               id(disp1).send_command_printf("page home");
               }
-    on_press:
-      then:
-        - lambda: |-
-            if (id(disp1_currentpage).state == "home") {
-            id(disp1).send_command_printf("page buttonpage01");
-            } else if(id(disp1_currentpage).state == "buttonpage01"){
-            id(disp1).send_command_printf("page home");
-            } else {
-            id(disp1).send_command_printf("page home");
-            }
 
   ##### Restart NSPanel Button - Setting Page #####
   - platform: nextion
