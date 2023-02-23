@@ -367,7 +367,7 @@ binary_sensor:
       then:
         - lambda: |-
             if (id(disp1_currentpage).state == "home") {
-            id(disp1).send_command_printf("page butttonpage01");
+            id(disp1).send_command_printf("page buttonpage01");
             } else if(id(disp1_currentpage).state == "buttonpage01"){
             id(disp1).send_command_printf("page home");
             } else {
@@ -402,7 +402,7 @@ binary_sensor:
         then:
           - lambda: |-
               if (id(disp1_currentpage).state == "home") {
-              id(disp1).send_command_printf("page butttonpage01");
+              id(disp1).send_command_printf("page buttonpage01");
               } else if(id(disp1_currentpage).state == "buttonpage01"){
               id(disp1).send_command_printf("page home");
               } else {
@@ -412,7 +412,7 @@ binary_sensor:
       then:
         - lambda: |-
             if (id(disp1_currentpage).state == "home") {
-            id(disp1).send_command_printf("page butttonpage01");
+            id(disp1).send_command_printf("page buttonpage01");
             } else if(id(disp1_currentpage).state == "buttonpage01"){
             id(disp1).send_command_printf("page home");
             } else {
