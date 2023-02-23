@@ -337,9 +337,6 @@ binary_sensor:
     pin:
       number: 14
       inverted: true
-    on_click:
-      - min_length: 50ms
-        max_length: 1000ms
     on_press:
       then:
         - lambda: |-
