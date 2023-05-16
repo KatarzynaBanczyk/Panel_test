@@ -5,11 +5,11 @@
 blueprint:
   name: NSPanel Configuration
   description: "# Configuration and synchronization NSPanel via Blueprint"
-
+  
   source_url: https://github.com/KatarzynaBanczyk/Panel_test/blob/main/nspanel_blueprint.yaml
   domain: automation
   input:
-    ##### MAIN NAME #####
+
     nspanel_name:
       name: ESPhome Node Name
       description: '* *here you have to enter exactly the same **"device_name"** you entered in the Esphome file*'
