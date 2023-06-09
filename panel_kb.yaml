@@ -2,7 +2,6 @@ wifi:
   ssid: ${wifi_ssid}
   password: ${wifi_password}
   power_save_mode: none
-
   ap:
     ssid: "${device_name}"
     password: 1
@@ -56,18 +55,35 @@ button:
 
 api:
   services:
-    # Service to play a song
-    - service: play_rtttl
-      variables:
-        song_str: string
-      then:
-        - rtttl.play:
-            rtttl: !lambda "return song_str;"
     - service: upload_tft
       then:
         - lambda: "id(disp1).upload_tft();"
-    - service: send_command
-      variables:
-        cmd: string
+ 
+ display:
+  - platform: nextion
+    id: disp1
+    uart_id: tf_uart
+    tft_url: ${nextion_update_url}
+    on_setup:
       then:
-        - lambda: 'id(disp1).send_command_printf("%s", cmd.c_str());'
+        - lambda: id(disp1).send_command_printf("page 8");
+        - lambda: id(disp1).set_component_text_printf("boot.esph_version", "%s", "3.1.0"); ### esphome-version ###
+        - wait_until: api.connected
+        - lambda: id(disp1).set_component_text_printf("boot.ip_addr", "%s", id(ip_address).state.c_str());
+        - delay: 0.5s
+        - number.set:
+            id: display_brightness
+            value: !lambda "return id(display_brightness_global);"
+        - number.set:
+            id: display_dim_brightness
+            value: !lambda "return id(display_dim_brightness_global);"
+        - lambda: id(disp1).set_component_text_printf("settings.a03", "%i", id(display_brightness_global));
+        - lambda: id(disp1).set_component_text_printf("settings.a04", "%i", id(display_dim_brightness_global));
+        - lambda: id(disp1).send_command_printf("settings.brightslider.val=%i", id(display_brightness_global));
+        - lambda: id(disp1).send_command_printf("settings.dimslider.val=%i", id(display_dim_brightness_global));
+        - lambda: id(disp1).send_command_printf("home.sleepmodus.val=%i", id(sleep_modus_global));
+        - lambda: id(disp1).set_component_value("settings.a02", id(sleep_modus_global) == 1);
+        - delay: 0.5s
+        - switch.template.publish:
+            id: nextion_init
+            state: on
