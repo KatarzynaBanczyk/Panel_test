@@ -56,8 +56,6 @@ external_components:
 ##### ESPHOME CONFIGURATION #####
 esphome:
   name: ${device_name}
-  min_version: 2022.10.2
-
 ##### TYPE OF ESP BOARD #####
 esp32:
   board: esp32dev
