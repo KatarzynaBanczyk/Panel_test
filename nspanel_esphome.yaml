@@ -687,7 +687,7 @@ switch:
     name: ${device_name} Nextion inited
     id: nextion_init
     entity_category: config
-    restore_state: false
+    restore_mode: false
     assumed_state: off
     optimistic: true
 
@@ -696,7 +696,7 @@ switch:
     name: ${device_name} Notification unread
     id: notification_unread
     entity_category: config
-    restore_state: true
+    restore_mode: true
     optimistic: true
 
   ##### Notification sound #####
@@ -704,7 +704,7 @@ switch:
     name: ${device_name} Notification sound
     id: notification_sound
     entity_category: config
-    restore_state: true
+    restore_mode: true
     optimistic: true
 
   ##### Confirmation Message #####
@@ -712,7 +712,7 @@ switch:
     name: ${device_name} Confirmation Message
     id: confirmation_message
     entity_category: config
-    restore_state: false
+    restore_mode: false
     optimistic: true
 
   ##### UPDATE TFT DISPLAY #####
@@ -756,7 +756,7 @@ switch:
     name: ${device_name} Sleep Modus
     id: sleep_modus
     entity_category: config
-    restore_state: true
+    restore_mode: true
     assumed_state: false
     optimistic: true
     on_turn_off:
@@ -777,14 +777,14 @@ switch:
     name: ${device_name} Relay 1 Local Fallback
     id: relay1_fallback
     entity_category: config
-    restore_state: true
+    restore_mode: true
     optimistic: true
 
   - platform: template
     name: ${device_name} Relay 2 Local Fallback
     id: relay2_fallback
     entity_category: config
-    restore_state: true
+    restore_mode: true
     optimistic: true
 
 ##### START - NUMBER CONFIGURATION #####
