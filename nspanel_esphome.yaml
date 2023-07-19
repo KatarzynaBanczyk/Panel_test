@@ -736,7 +736,6 @@ switch:
     platform: template
     id: notification_unread
     entity_category: config
-    restore_state: true
     optimistic: true
 
   ##### Notification sound #####
@@ -744,7 +743,6 @@ switch:
     platform: template
     id: notification_sound
     entity_category: config
-    restore_state: true
     optimistic: true
     restore_mode: RESTORE_DEFAULT_OFF
 
@@ -753,7 +751,6 @@ switch:
     platform: template
     id: confirmation_message
     entity_category: config
-    restore_state: false
     optimistic: true
 
   ##### PHYSICAL SWITCH 1 #####
@@ -790,7 +787,6 @@ switch:
     id: sleep_mode
     entity_category: config
     restore_mode: RESTORE_DEFAULT_OFF
-    restore_state: true
     optimistic: false
     turn_on_action: &sleep_mode-turn_on
       - logger.log: "Sleep mode - Turn on"
@@ -812,7 +808,6 @@ switch:
     platform: template
     id: relay1_fallback
     entity_category: config
-    restore_state: true
     optimistic: true
     restore_mode: RESTORE_DEFAULT_OFF
 
@@ -820,7 +815,6 @@ switch:
     platform: template
     id: relay2_fallback
     entity_category: config
-    restore_state: true
     optimistic: true
     restore_mode: RESTORE_DEFAULT_OFF
 
